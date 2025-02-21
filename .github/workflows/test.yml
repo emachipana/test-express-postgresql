@@ -1,4 +1,3 @@
-name: Firt test
 
 on:
   push:
@@ -8,7 +7,10 @@ on:
 jobs:
   say-hi:
     runs-on: ubuntu-latest
-    
+    permissions: 
+      contents: read
+      packages: write
+    environment: production
     steps:
       - name: Show message
         run: echo "Hello world"
@@ -17,3 +19,12 @@ jobs:
           curl -X POST 'https://webhook.site/892f2749-aba3-44c8-af63-04640edf7a85' \
           -H 'content-type: application/json' \
           -d '{"nombre": "Enmanuel"}'
+      - name: Checkout Repository
+        run: actions/checkout@v4
+      - name: Login on GHCR
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u emachipana --password-stdin
+      - name: Up Docker Container
+        run: docker build . -t ghcr.io/emachipana/express-image:latest
+      - name: Push image
+        run: docker push ghcr.io/emachipana/express-image:latest
+        
