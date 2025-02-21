@@ -20,11 +20,10 @@ jobs:
           -H 'content-type: application/json' \
           -d '{"nombre": "Enmanuel"}'
       - name: Checkout Repository
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Login on GHCR
         run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u emachipana --password-stdin
       - name: Up Docker Container
         run: docker build . -t ghcr.io/emachipana/express-image:latest
       - name: Push image
         run: docker push ghcr.io/emachipana/express-image:latest
-        
