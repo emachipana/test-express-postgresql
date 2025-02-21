@@ -7,9 +7,8 @@ on:
 
 jobs:
   say-hi:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     
     steps:
       - name: Show message
         run: echo "Hello world"
-
